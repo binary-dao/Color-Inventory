@@ -7,7 +7,7 @@ using UnityEngine;
 public class APIInventory : ScriptableObject
 {
     //use this signature for callback functions in your user interface
-    public delegate void Callback();
+    public delegate void Callback(Inventory inventory);
 
     //we can change file directly using editors, but now it's for inner API usage only
     private const string FILE_PATH = "Assets/Resources/inventory.json";
@@ -20,7 +20,7 @@ public class APIInventory : ScriptableObject
         inventory = new Inventory();
         Debug.Log("LoadInventory");
         LoadFromFile();
-        callback();
+        callback(inventory);
     }
 
     private static void LoadFromFile()
