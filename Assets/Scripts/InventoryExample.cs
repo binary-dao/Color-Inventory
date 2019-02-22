@@ -34,7 +34,6 @@ public class InventoryExample : MonoBehaviour {
     void Start () {
         anchor = GameObject.Find("Anchor");
         GenerateCells();
-        GameObject.Find("DeleteCell").GetComponent<CellLogic>().isDeleteCell = true;
 
         GenerateNewColorItem();
 
@@ -82,6 +81,10 @@ public class InventoryExample : MonoBehaviour {
                 cellArray[x, y] = cell;
             }
         }
+        var deleteCell = (GameObject)Instantiate(Resources.Load("CellPrefab"));
+        deleteCell.transform.SetParent(anchor.transform);
+        deleteCell.transform.position = new Vector2 (anchor.transform.position.x+500, anchor.transform.position.y + 150);
+        deleteCell.GetComponent<CellLogic>().isDeleteCell = true;
     }
 
     private void UpdateInventory(Inventory inventory)
