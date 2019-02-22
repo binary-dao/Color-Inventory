@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\API Inventory\ColorInventoryItem.cs" />
     <Compile Include="Assets\Scripts\API Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\API Inventory\InventoryItem.cs" />
+    <Compile Include="Assets\Scripts\CellLogic.cs" />
     <Compile Include="Assets\Scripts\InventoryExample.cs" />
     <Compile Include="Assets\Scripts\SliderLogic.cs" />
     <Compile Include="Assets\Scripts\UserInterfaceItem.cs" />

@@ -31,20 +31,66 @@ public class APIInventory : ScriptableObject
         inventory = JsonUtility.FromJson<Inventory>(jsonString);
         reader.Close();
     }
-
-
+    
 
     private static void SaveToFile()
     {
-       /* ColorInventoryItem test = new ColorInventoryItem();
-        test.x = 1;
-        test.y = 13;
-        test.color = Color.red;
-        inventory.items.Add(test);*/
-
         StreamWriter writer = new StreamWriter(FILE_PATH, false);
         string jsonString = JsonUtility.ToJson(inventory);
         writer.WriteLine(jsonString);
         writer.Close();
+    }
+
+    public static void AddElement(ColorInventoryItem item, Callback callback)
+    {
+        inventory.items.Add(item);
+        SaveToFile();
+        callback(inventory);
+    }
+
+    public static void DeleteElement(int x, int y, Callback callback)
+    {
+        foreach(var item in inventory.items)
+        {
+            if(item.x == x && item.y == y)
+            {
+                inventory.items.Remove(item);
+                break;
+            }
+        }
+        SaveToFile();
+        callback(inventory);
+    }
+
+    //work both for single change of position and for swipe between 2 items
+    internal static void ChangePosition(int x1, int y1, int x2, int y2, Callback callback)
+    {
+        ColorInventoryItem item1 = null;
+        ColorInventoryItem item2 = null;
+        foreach (var item in inventory.items)
+        {
+            if (item.x == x1 && item.y == y1)
+            {
+                item1 = item;
+                continue;
+            }
+            if (item.x == x2 && item.y == y2)
+            {
+                item2 = item;
+                continue;
+            }
+        }
+        if(item1 != null)
+        {
+            item1.x = x2;
+            item1.y = y2;
+        }
+        if(item2 != null)
+        {
+            item2.x = x1;
+            item2.y = y1;
+        }
+        SaveToFile();
+        callback(inventory);
     }
 }
